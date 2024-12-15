@@ -36,23 +36,23 @@ public class CursoController {
     @Autowired
     private ProfesorRepository profesorRepository;
 
-    @GetMapping("/listar")
+    @GetMapping("/listarCursos")
     public ModelAndView listarCursos() {
-        ModelAndView mv = new ModelAndView("curso/listar");
+        ModelAndView mv = new ModelAndView("curso/listarCursos");
         List<CursoModel> lista = cursoRepository.findAll();
         mv.addObject("cursos", lista);
         return mv;
     }
 
-    @PostMapping("/listar")
+    @PostMapping("/listarCursos")
     public ModelAndView listarCursosPost() {
-        ModelAndView mv = new ModelAndView("curso/listar");
+        ModelAndView mv = new ModelAndView("curso/listarCursos");
         List<CursoModel> lista = cursoRepository.findAll();
         mv.addObject("cursos", lista);
         return mv;
     }
 
-    @GetMapping("/buscar")
+    @GetMapping("/buscarCurso")
 public String buscar(@RequestParam("query") String query, Model model) {
     String[] keywords = query.split("\\s+");
     List<CursoModel> cursos;
@@ -62,10 +62,10 @@ public String buscar(@RequestParam("query") String query, Model model) {
         cursos = cursoRepository.searchByKeyword(query);
     }
     model.addAttribute("cursos", cursos);
-    return "curso/buscar";
+    return "curso/buscarCurso";
     }
 
-    @GetMapping("/inserir")
+    @GetMapping("/inserirCurso")
     public String inserirCurso(Model model) {
         model.addAttribute("cursoDto", new CursoDto());
         model.addAttribute("categorias", categoriaRepository.findAll());
@@ -73,7 +73,7 @@ public String buscar(@RequestParam("query") String query, Model model) {
         return "curso/inserirCurso";
     }
 
-    @PostMapping("/inserir")
+    @PostMapping("/inserirCurso")
     public String inserirBD(
         @ModelAttribute @Valid CursoDto cursoDto, 
         BindingResult result, RedirectAttributes msg, Model model) {
@@ -83,7 +83,7 @@ public String buscar(@RequestParam("query") String query, Model model) {
             //model.addAttribute("profesores", profesorRepository.findAll());
             //model.addAttribute("msgError","Error al cadastrar!");
             msg.addFlashAttribute("msgError","Error al cadastrar!");
-            return "redirect:/curso/inserir";
+            return "redirect:/curso/inserirCurso";
         }
         CursoModel cursoModel = new CursoModel();
         BeanUtils.copyProperties(cursoDto, cursoModel);
@@ -91,7 +91,7 @@ public String buscar(@RequestParam("query") String query, Model model) {
         cursoModel.setProfesor(profesorRepository.findById(cursoDto.getIdProfesor()).orElse(null));
         cursoRepository.save(cursoModel);
         msg.addFlashAttribute("sucessoCadastrar", "Curso registrado!");
-        return "redirect:../../curso/listar/";
+        return "curso/listarCursos";
     }
 
     @GetMapping("/editar/{id}")
@@ -101,10 +101,10 @@ public String buscar(@RequestParam("query") String query, Model model) {
             model.addAttribute("cursos", curso.get());
             model.addAttribute("categorias", categoriaRepository.findAll());
             model.addAttribute("profesores", profesorRepository.findAll());
-            return "curso/editar";
+            return "curso/editarCurso";
         } else {
             model.addAttribute("error", "Curso no encontrado");
-            return "redirect:../../curso/listar/";
+            return "curso/listarCursos";
         }
     }
 
@@ -114,7 +114,7 @@ public String buscar(@RequestParam("query") String query, Model model) {
         @ModelAttribute @Valid CursoDto cursoDto, 
         BindingResult result, RedirectAttributes msg) {
         if(result.hasErrors()) {
-            return "curso/editar";
+            return "curso/editarCurso";
         }
         Optional<CursoModel> curso = cursoRepository.findById(id);
         if (curso.isPresent()) {
@@ -127,7 +127,7 @@ public String buscar(@RequestParam("query") String query, Model model) {
         } else {
             msg.addFlashAttribute("erroEditar", "Curso no encontrado");
         }
-        return "redirect:../../curso/listar/";
+        return "curso/listarCursos";
     }
 
     @GetMapping("/excluir/{id}")
@@ -135,10 +135,10 @@ public String buscar(@RequestParam("query") String query, Model model) {
         Optional<CursoModel> curso = cursoRepository.findById(id);
         if(curso.isEmpty()) {
             msg.addFlashAttribute("erroExcluir", "Curso no encontrado");
-            return "redirect:../../curso/listar/";
+            return "curso/listarCursos";
         }
         cursoRepository.deleteById(id);
         msg.addFlashAttribute("sucessoExcluir", "Curso eliminado!");
-        return "redirect:../../curso/listar/";
+        return "curso/listarCursos";
     }
 }

@@ -37,13 +37,13 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/buscar")
+    @GetMapping("/buscarCurso")
     public String buscar(@RequestParam("query") String query, Model model) {
         List<CursoModel> cursos = cursoRepository.findByNombreCursoContainingIgnoreCase(query);
         List<ProfesorModel> profesores = profesorRepository.findByNombreProfContainingIgnoreCase(query);
         model.addAttribute("cursos", cursos);
         model.addAttribute("profesores", profesores);
-        return "buscar";
+        return "buscarCurso";
     }
 
     @GetMapping("/categoria/{id}")
@@ -60,14 +60,14 @@ public class MainController {
         return "curso/curso";
     }
 
-    @GetMapping("/listarCategorias")
+    @GetMapping("/listarCat")
     public String listarCategorias(Model model) {
         List<CategoriaModel> categorias = categoriaRepository.findAll();
         model.addAttribute("categorias", categorias);
         return "categoria/listarCat";
     }
 
-    @GetMapping("/listarProfesores")
+    @GetMapping("/listarProf")
     public String listarProfesores(Model model) {
         List<ProfesorModel> profesores = profesorRepository.findAll();
         model.addAttribute("profesores", profesores);
