@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle del Curso</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h1 th:text="${curso.nombreCurso}"></h1>
+    <p th:text="${curso.descCurso}"></p>
+    <p>Fecha de Inicio: <span th:text="${curso.fechaInicioCurso}"></span></p>
+    <p>Fecha de Fin: <span th:text="${curso.fechaFinCurso}"></span></p>
+    <img th:src="@{${curso.imagenCurso}}" alt="Imagen del Curso">
+</body>
+</html>

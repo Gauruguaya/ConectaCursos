@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Curso</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <h1>Editar Curso</h1>
+    <form th:action="@{/curso/editar/{id}(id=${cursoDto.idCurso})}" th:object="${cursoDto}" method="post">
+        <label for="nombreCurso">Nombre del Curso:</label>
+        <input type="text" id="nombreCurso" th:field="*{nombreCurso}" />
+        
+        <label for="descCurso">Descripción:</label>
+        <textarea id="descCurso" th:field="*{descCurso}"></textarea>
+        
+        <label for="fechaInicioCurso">Fecha de Inicio:</label>
+        <input type="date" id="fechaInicioCurso" th:field="*{fechaInicioCurso}" />
+        
+        <label for="fechaFinCurso">Fecha de Fin:</label>
+        <input type="date" id="fechaFinCurso" th:field="*{fechaFinCurso}" />
+        
+        <label for="imagenCurso">Imagen del Curso:</label>
+        <input type="text" id="imagenCurso" th:field="*{imagenCurso}" />
+        
+        <label for="categoriaId">Categoría:</label>
+        <select id="categoriaId" th:field="*{categoriaId}">
+            <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombreCategoria}"></option>
+        </select>
+        
+        <label for="profesorId">Profesor:</label>
+        <select id="profesorId" th:field="*{profesorId}">
+            <option th:each="profesor : ${profesores}" th:value="${profesor.idProfesor}" th:text="${profesor.nombreProf}"></option>
+        </select>
+        
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>

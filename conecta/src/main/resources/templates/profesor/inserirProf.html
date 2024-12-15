@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Agregar Profesor</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h1>Agregar Profesor</h1>
+    <form th:action="@{/profesor/inserir}" method="post" th:object="${profesorDto}">
+        <label for="nombreProf">Nombre:</label>
+        <input type="text" id="nombreProf" th:field="*{nombreProf}">
+        <label for="emailProf">Email:</label>
+        <input type="email" id="emailProf" th:field="*{emailProf}">
+        <label for="fotoProf">Foto:</label>
+        <input type="text" id="fotoProf" th:field="*{fotoProf}">
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>

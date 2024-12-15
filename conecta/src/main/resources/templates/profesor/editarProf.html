@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Profesor</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h1>Editar Profesor</h1>
+    <form th:action="@{/profesor/editar/{id}(id=${profesor.idProfesor})}" method="post" th:object="${profesorDto}">
+        <label for="nombreProf">Nombre:</label>
+        <input type="text" id="nombreProf" th:field="*{nombreProf}" th:value="${profesor.nombreProf}">
+        <label for="emailProf">Email:</label>
+        <input type="email" id="emailProf" th:field="*{emailProf}" th:value="${profesor.emailProf}">
+        <label for="fotoProf">Foto:</label>
+        <input type="text" id="fotoProf" th:field="*{fotoProf}" th:value="${profesor.fotoProf}">
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>
