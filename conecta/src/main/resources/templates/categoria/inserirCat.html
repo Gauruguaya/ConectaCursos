@@ -12,10 +12,20 @@
             </li>
         </ul>
     </nav>
-    <h1>Bienvenido al Sistema de Gestión</h1>
+    <!--<h1>Bienvenido al Sistema de Gestión</h1>
     <form th:action="@{/buscar}" method="get">
         <input type="text" name="query" placeholder="Buscar curso...">
         <button type="submit">Buscar</button>
+    </form>-->
+
+    <h1>Inserir Categoría</h1>
+    <form th:action="@{/categoria/inserir}" th:method="post">
+        <fieldset>
+            <label for="nombreCat">Nombre de la Categoría:</label>
+            <input id="nombreCat" type="text" name="nombreCat" placeholder="Nombre de la Categoría" required>
+            <button type="submit">Guardar</button>
+        </fieldset>
     </form>
+
 </body>
 </html>
