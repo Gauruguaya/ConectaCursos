@@ -2,11 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Error</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/styleError.css}">
 </head>
 <body>
-    <h1>Oops! Algo salió mal.</h1>
-    <p>La página que estás buscando no se pudo encontrar.</p>
-    <a th:href="@{/}">Volver a la página de inicio</a>
+<div class="error-500" data-text="¡Oh, no! Nuestro código espagueti no funciona correctamente. ¡Volveremos pronto!">
+    <spaguetti>
+        <fork></fork>
+        <meat></meat>
+        <pasta></pasta>
+        <plate></plate>
+    </spaguetti>
+</div>
+<h2><a th:href="@{/}">Volver a la página de inicio</a></h2>
+<script type="text/javascript">
+    const error = document.querySelector(".error-500");
+    let i = 0, data = "", text = error.getAttribute("data-text");
+
+    let typing = setInterval(() => {
+        if(i == text.length){
+            clearInterval(typing);
+        }else{
+            data += text[i];
+            document.querySelector(".error-500").setAttribute("data-text", data);
+            i++;
+        }
+    }, 100);
+</script>
 </body>
 </html>
