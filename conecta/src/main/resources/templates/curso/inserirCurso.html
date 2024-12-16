@@ -7,48 +7,34 @@
 <body>
     <h1>Insertar Curso</h1>
     <h3 th:text="${msgError}"></h3>
-    <form th:action="@{/curso/inserir}" th:object="${cursoDto}" method="post">
+    <form th:action="@{/curso/inserir}" th:method="post">
         <fieldset>
             <legend>Curso</legend>
         <label for="nombreCurso">Nombre del Curso:</label>
-        <input type="text" id="nombreCurso" th:field="*{nombreCurso}" />
-        
+        <input type="text" id="nombreCurso" name="nombreCurso" />
         <br>
-
         <label for="descCurso">Descripción:</label>
-        <textarea id="descCurso" th:field="*{descCurso}"></textarea>
-        
+        <textarea id="descCurso" name="descCurso"></textarea>
         <br>
-
         <label for="fechaInicioCurso">Fecha de Inicio:</label>
-        <input type="date" id="fechaInicioCurso" th:field="*{fechaInicioCurso}" />
-        
+        <input type="date" id="fechaInicioCurso" name="fechaInicioCurso"/>
         <br>
-
         <label for="fechaFinCurso">Fecha de Fin:</label>
-        <input type="date" id="fechaFinCurso" th:field="*{fechaFinCurso}" />
-        
+        <input type="date" id="fechaFinCurso" name="fechaFinCurso"/>
         <br>
-
         <label for="imagenCurso">Imagen del Curso:</label>
-        <input type="text" id="imagenCurso" th:field="*{imagenCurso}" />
-        
+        <input type="text" id="imagenCurso" name="imagenCurso"/>
         <br>
-
         <label for="idCategoria">Categoría:</label>
-        <select id="idCategoria" name="idCategoria" th:field="*{idCategoria}">
+        <select id="idCategoria" name="categoria">
             <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombreCat}"></option>
         </select>
-        
         <br>
-
         <label for="idProfesor">Profesor:</label>
-        <select id="idProfesor" name="idProfesor" th:field="*{idProfesor}">
+        <select id="idProfesor" name="profesor">
             <option th:each="profesor : ${profesores}" th:value="${profesor.idProfesor}" th:text="${profesor.nombreProf}"></option>
         </select>
-        
         <br>
-
         <button type="submit">Guardar</button>
         </fieldset>
     </form>

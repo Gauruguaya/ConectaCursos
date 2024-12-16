@@ -1,7 +1,9 @@
 package conectacursos.conecta.dtos;
 
-import java.util.Date;
+import java.sql.Date;
 
+import conectacursos.conecta.models.CategoriaModel;
+import conectacursos.conecta.models.ProfesorModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,8 +19,9 @@ public record CursoRecordDto (
 
     @NotBlank String imagenCurso,
 
-    @NotNull Integer idCategoria,
+    CategoriaModel categoria,
 
-    @NotNull Integer idProfesor
+    ProfesorModel profesor
+
 ){}
     

@@ -29,7 +29,7 @@
                 <td th:text="${curso.fechaInicioCurso}"></td>
                 <td th:text="${curso.fechaFinCurso}"></td>
                 <td><img th:src="@{${curso.imagenCurso}}" alt="Imagen del Curso" /></td>
-                <td th:text="${curso.categoria.nombreCategoria}"></td>
+                <td th:text="${curso.categoria.nombreCat}"></td>
                 <td th:text="${curso.profesor.nombreProf}"></td>
                 <td>
                     <a th:href="@{/curso/editar/{id}(id=${curso.idCurso})}">Editar</a>

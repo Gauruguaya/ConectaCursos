@@ -1,7 +1,7 @@
 package conectacursos.conecta.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="curso")
@@ -26,10 +27,10 @@ public class CursoModel implements Serializable{
     @NotBlank
     private String descCurso;
 
-    @NotBlank
+    @NotNull
     private Date fechaInicioCurso;
 
-    @NotBlank
+    @NotNull
     private Date fechaFinCurso;
 
     @NotBlank

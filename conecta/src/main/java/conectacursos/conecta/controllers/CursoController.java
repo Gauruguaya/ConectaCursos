@@ -2,6 +2,7 @@ package conectacursos.conecta.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import conectacursos.conecta.dtos.CursoRecordDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class CursoController {
 
     @GetMapping("/listar")
     public ModelAndView listarCursos() {
-        ModelAndView mv = new ModelAndView("curso/listar");
+        ModelAndView mv = new ModelAndView("curso/listarCursos");
         List<CursoModel> lista = cursoRepository.findAll();
         mv.addObject("cursos", lista);
         return mv;
@@ -53,7 +54,7 @@ public class CursoController {
     }
 
     @GetMapping("/buscar")
-public String buscar(@RequestParam("query") String query, Model model) {
+    public String buscar(@RequestParam("query") String query, Model model) {
     String[] keywords = query.split("\\s+");
     List<CursoModel> cursos;
     if (keywords.length > 1) {
@@ -75,23 +76,23 @@ public String buscar(@RequestParam("query") String query, Model model) {
 
     @PostMapping("/inserir")
     public String inserirBD(
-        @ModelAttribute @Valid CursoDto cursoDto, 
+        @ModelAttribute @Valid CursoRecordDto cursoRecordDto,
         BindingResult result, RedirectAttributes msg, Model model) {
         if(result.hasErrors()) {
             //model.addAttribute("cursoDto", new CursoDto());
             //model.addAttribute("categorias", categoriaRepository.findAll());
             //model.addAttribute("profesores", profesorRepository.findAll());
             //model.addAttribute("msgError","Error al cadastrar!");
-            msg.addFlashAttribute("msgError","Error al cadastrar!");
+            msg.addFlashAttribute("msgError","Error al cadastrar! "+result.getFieldError());
             return "redirect:/curso/inserir";
         }
         CursoModel cursoModel = new CursoModel();
-        BeanUtils.copyProperties(cursoDto, cursoModel);
-        cursoModel.setCategoria(categoriaRepository.findById(cursoDto.getIdCategoria()).orElse(null));
-        cursoModel.setProfesor(profesorRepository.findById(cursoDto.getIdProfesor()).orElse(null));
+        BeanUtils.copyProperties(cursoRecordDto, cursoModel);
+        //cursoModel.setCategoria(categoriaRepository.findById(cursoDto.getIdCategoria()).orElse(null));
+        //cursoModel.setProfesor(profesorRepository.findById(cursoDto.getIdProfesor()).orElse(null));
         cursoRepository.save(cursoModel);
         msg.addFlashAttribute("sucessoCadastrar", "Curso registrado!");
-        return "redirect:../../curso/listar/";
+        return "redirect:/curso/listar";
     }
 
     @GetMapping("/editar/{id}")
