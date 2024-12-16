@@ -32,44 +32,44 @@ public class ProfesorController {
         return "profesor/index";
     }
 
-    @GetMapping("/profesor/inserir")
+    @GetMapping("/inserir")
     public String inserirProfesor(Model model) {
-        model.addAttribute("profesorDto", new ProfesorDto("", "", ""));
+        //model.addAttribute("profesorDto", new ProfesorDto("", "", ""));
         return "profesor/inserirProf";
     }
 
-    @PostMapping("/profesor/inserir/")
+    @PostMapping("/inserir")
     public String inserirBD(
         @ModelAttribute @Valid ProfesorDto profesorDto, 
         BindingResult result, RedirectAttributes msg) {
         if(result.hasErrors()) {
             msg.addFlashAttribute("erroCadastrar", "Error al registrar nuevo profesor");
-            return "redirect:../../profesor/inserir/";
+            return "redirect:/profesor/inserir";
         }    
         var profesorModel = new ProfesorModel();
         BeanUtils.copyProperties(profesorDto, profesorModel);
         repository.save(profesorModel);
         msg.addFlashAttribute("sucessoCadastrar", "Profesor registrado!");
-        return "redirect:../";
+        return "redirect:/";
     }        
 
-    @PostMapping("/profesor/listar/")
+    @PostMapping("/listar")
     public ModelAndView listarProfesores(){
-        ModelAndView mv = new ModelAndView("profesor/listar");
+        ModelAndView mv = new ModelAndView("profesor/listarProf");
         List<ProfesorModel> lista = repository.findAll();
         mv.addObject("profesores", lista);
         return mv;
     }
 
-    @GetMapping("/profesor/listar/")
+    @GetMapping("/listar")
     public ModelAndView listar() {
-        ModelAndView mv = new ModelAndView("profesor/listar");
+        ModelAndView mv = new ModelAndView("profesor/listarProf");
         List<ProfesorModel> lista = repository.findAll();
         mv.addObject("profesores", lista);
         return mv;
     }
 
-    @GetMapping("/profesor/editar/{id}")
+    @GetMapping("/editar/{id}")
     public ModelAndView editar(@PathVariable int id) {
         ModelAndView mv = new ModelAndView("profesor/editar");
         Optional<ProfesorModel> profesor = repository.findByIdProfesor(id);
@@ -81,7 +81,7 @@ public class ProfesorController {
         return mv;
     }
 
-    @PostMapping("/profesor/editar/{id}")
+    @PostMapping("/editar/{id}")
     public String editarBD(
         @ModelAttribute @Valid ProfesorDto profesorDto, 
         BindingResult result, RedirectAttributes msg,
@@ -90,7 +90,7 @@ public class ProfesorController {
 
         if(result.hasErrors()) {
             msg.addFlashAttribute("erroEditar", "Error al editar profesor");
-            return "redirect:../../profesor/listar/";
+            return "redirect:/profesor/listar";
         }
         if (profesor.isPresent()) {
             var profesorModel = profesor.get();
@@ -100,15 +100,15 @@ public class ProfesorController {
         } else {
             msg.addFlashAttribute("erroEditar", "Profesor no encontrado");
         }
-        return "redirect:../../profesor/listar/";
+        return "redirect:/profesor/listar";
     }
-    @GetMapping("/profesor/excluir/{id}")
+    @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable int id){
         Optional<ProfesorModel> profesor = repository.findById(id);
         if(profesor.isEmpty()) {
-            return "redirect:../../profesor/listar/";
+            return "redirect:/profesor/listar";
         }
         repository.deleteById(id);
-        return "redirect:../../profesor/listar/";
+        return "redirect:/profesor/listar";
     }
 }
