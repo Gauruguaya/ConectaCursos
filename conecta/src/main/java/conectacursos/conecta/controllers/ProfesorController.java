@@ -50,7 +50,7 @@ public class ProfesorController {
         BeanUtils.copyProperties(profesorDto, profesorModel);
         repository.save(profesorModel);
         msg.addFlashAttribute("sucessoCadastrar", "Profesor registrado!");
-        return "redirect:/";
+        return "redirect:/profesor/listar";
     }        
 
     @PostMapping("/listar")
@@ -72,7 +72,7 @@ public class ProfesorController {
     @GetMapping("/editar/{id}")
     public ModelAndView editar(@PathVariable int id) {
         ModelAndView mv = new ModelAndView("profesor/editarProf");
-        Optional<ProfesorModel> profesor = repository.findByIdProfesor(id);
+        Optional<ProfesorModel> profesor = repository.findById(id);
         if (profesor.isPresent()) {
             mv.addObject("profesor", profesor.get());
         } else {
