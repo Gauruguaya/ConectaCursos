@@ -51,14 +51,14 @@ public class CategoriaController {
         msg.addFlashAttribute("sucessoCadastrar", "Categoría registrada!");
         return "categoria/listarCat";
     }		
-    @PostMapping("/listar")
+    @PostMapping("/listarCat")
     public ModelAndView listarCategorias(){
         ModelAndView mv = new ModelAndView("categoria/listarCat");
         List<CategoriaModel> lista = repository.findAll();
         mv.addObject("categorias", lista);
         return mv;
     }
-    @GetMapping("/listar")
+    @GetMapping("/listarCat")
     public ModelAndView listar() {
         ModelAndView mv = new ModelAndView("categoria/listarCat");
         List<CategoriaModel> lista = repository.findAll();

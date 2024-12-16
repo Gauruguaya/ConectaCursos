@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Listar Categorías</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
     <h1>Listar Categorías</h1>
@@ -21,7 +21,7 @@
                 <td th:text="${categoria.nombreCat}"></td>
                 <td>
                     <a th:href="@{/categoria/editar/{id}(id=${categoria.idCategoria})}">Editar</a>
-                    <a th:href="@{/categoria/excluir/{id}(id=${categoria.idCategoria})}">Borrar</a>
+                    <a th:href="@{/categoria/excluir/{id}(id=${categoria.idCategoria})}">Eliminar</a>
                 </td>
             </tr>
         </tbody>
