@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Listar Cursos</title>
+    <title>Listar Profesores</title>
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
     <h1>Listar Cursos</h1>
-    <a th:href="@{/curso/inserir}">Agregar Curso</a>
+    <a th:href="@{/profesor/inserir}">Agregar Profesor</a>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Fecha de Inicio</th>
-                <th>Fecha de Fin</th>
+                <th>E-mail</th>
                 <th>Imagen</th>
-                <th>Categoría</th>
-                <th>Profesor</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="curso : ${cursos}">
-                <td th:text="${curso.idCurso}"></td>
-                <td th:text="${curso.nombreCurso}"></td>
-                <td th:text="${curso.descCurso}"></td>
-                <td th:text="${curso.fechaInicioCurso}"></td>
-                <td th:text="${curso.fechaFinCurso}"></td>
-                <td><img th:src="@{${curso.imagenCurso}}" alt="Imagen del Curso" /></td>
-                <td th:text="${curso.categoria.nombreCategoria}"></td>
-                <td th:text="${curso.profesor.nombreProf}"></td>
+            <tr th:each="profesor : ${profesores}">
+                <td th:text="${profesor.idProfesor}"></td>
+                <td th:text="${profesor.nombreProf}"></td>
+                <td th:text="${profesor.emailProf}"></td>
+                <td><img th:src="@{${profesor.fotoProf}}" alt="Imagen del Profesor" /></td>
                 <td>
-                    <a th:href="@{/curso/editar/{id}(id=${curso.idCurso})}">Editar</a>
-                    <a th:href="@{/curso/excluir/{id}(id=${curso.idCurso})}">Eliminar</a>
+                    <a th:href="@{/profesor/editar/{id}(id=${profesor.idProfesor})}">Editar</a>
+                    <a th:href="@{/profesor/excluir/{id}(id=${profesor.idProfesor})}">Eliminar</a>
                 </td>
             </tr>
         </tbody>
