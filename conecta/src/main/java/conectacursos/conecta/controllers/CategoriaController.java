@@ -44,12 +44,12 @@ public class CategoriaController {
             BindingResult result, RedirectAttributes msg) {
         if(result.hasErrors()) {
             msg.addFlashAttribute("erroCadastrar", "Error al registrar nueva categoría");
-            return "redirect:../../categoria/inserir/";}	
+            return "redirect:/categoria/inserir";}
         var categoriaModel = new CategoriaModel();
         BeanUtils.copyProperties(categoriaDto, categoriaModel);
         repository.save(categoriaModel);
         msg.addFlashAttribute("sucessoCadastrar", "Categoría registrada!");
-        return "redirect:../../categoria/listar/";
+        return "redirect:/categoria/listar";
     }		
     @PostMapping("/listar")
     public ModelAndView listarCategorias(){
@@ -84,7 +84,7 @@ public class CategoriaController {
 
         if(result.hasErrors()) {
             msg.addFlashAttribute("erroEditar", "Error al editar categoría");
-            return "redirect:../../categoria/listar/";
+            return "redirect:/categoria/listar";
         }
         var categoriaModel = categoria.get();
         BeanUtils.copyProperties(categoriaDto, categoriaModel);
