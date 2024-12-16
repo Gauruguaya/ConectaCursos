@@ -71,7 +71,7 @@ public class ProfesorController {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editar(@PathVariable int id) {
-        ModelAndView mv = new ModelAndView("profesor/editar");
+        ModelAndView mv = new ModelAndView("profesor/editarProf");
         Optional<ProfesorModel> profesor = repository.findByIdProfesor(id);
         if (profesor.isPresent()) {
             mv.addObject("profesor", profesor.get());
