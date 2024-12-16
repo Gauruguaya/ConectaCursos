@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Editar Categoría</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
     <h1>Editar Categoría</h1>
     <form th:action="@{/categoria/editar/{id}(id=${id})}" th:method="post">
         <label for="nombreCat">Nombre de la Categoría:</label>
-        <input th:value="${descricao}" type="text" name="nombreCat" placeholder="Nombre de la Categoría" required>
+        <input id="nombreCat" th:value="${descricao}" type="text" name="nombreCat" placeholder="Nombre de la Categoría" required>
         <button type="submit">Guardar</button>
     </form>
 </body>
