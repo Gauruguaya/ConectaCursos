@@ -5,8 +5,13 @@
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/categoria/inserirCat}">Agregar Categoría</a></li>
+        </ul>
+    </nav>
     <h1>Listar Categorías</h1>
-    <a th:href="@{/categoria/inserir}">Agregar Categoría</a>
     <table>
         <thead>
             <tr>
@@ -21,7 +26,8 @@
                 <td th:text="${categoria.nombreCat}"></td>
                 <td>
                     <a th:href="@{/categoria/editar/{id}(id=${categoria.idCategoria})}">Editar</a>
-                    <a th:href="@{/categoria/excluir/{id}(id=${categoria.idCategoria})}">Borrar</a>
+                    <a th:href="@{/categoria/excluir/{id}(id=${categoria.idCategoria})}">Eliminar</a>
+                    <a th:href="@{/categoria/detalles/{id}(id=${categoria.idCategoria})}">Ver Cursos</a>
                 </td>
             </tr>
         </tbody>

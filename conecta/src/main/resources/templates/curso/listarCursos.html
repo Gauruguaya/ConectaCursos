@@ -5,8 +5,14 @@
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/categoria/listarCat}">Listar Categorías</a></li>
+            <li><a th:href="@{/curso/inserirCurso}">Agregar Curso</a></li>
+        </ul>
+    </nav>
     <h1>Listar Cursos</h1>
-    <a th:href="@{/curso/inserir}">Agregar Curso</a>
     <table>
         <thead>
             <tr>
@@ -32,8 +38,9 @@
                 <td th:text="${curso.categoria.nombreCat}"></td>
                 <td th:text="${curso.profesor.nombreProf}"></td>
                 <td>
-                    <a th:href="@{/curso/editar/{id}(id=${curso.idCurso})}">Editar</a>
+                    <a th:href="@{/curso/editarCurso/{id}(id=${curso.idCurso})}">Editar</a>
                     <a th:href="@{/curso/excluir/{id}(id=${curso.idCurso})}">Eliminar</a>
+                    <a th:href="@{/curso/detalles/{id}(id=${curso.idCurso})}">Ver Detalles</a>
                 </td>
             </tr>
         </tbody>

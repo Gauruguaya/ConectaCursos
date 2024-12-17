@@ -1,31 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Inicio</title>
+    <title>Agregar Categoría</title>
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
     <nav>
         <ul>
+            <li><a th:href="@{/}">Inicio</a></li>
             <li th:each="categoria : ${categorias}">
                 <a th:href="@{/categoria/{id}(id=${categoria.idCategoria})}" th:text="${categoria.nombreCat}"></a>
             </li>
         </ul>
     </nav>
-    <!--<h1>Bienvenido al Sistema de Gestión</h1>
-    <form th:action="@{/buscar}" method="get">
-        <input type="text" name="query" placeholder="Buscar curso...">
-        <button type="submit">Buscar</button>
-    </form>-->
-
-    <h1>Inserir Categoría</h1>
-    <form th:action="@{/categoria/inserir}" th:method="post">
-        <fieldset>
-            <label for="nombreCat">Nombre de la Categoría:</label>
-            <input id="nombreCat" type="text" name="nombreCat" placeholder="Nombre de la Categoría" required>
-            <button type="submit">Guardar</button>
-        </fieldset>
+    <h1>Agregar Nueva Categoría</h1>
+    <form th:action="@{/categoria/guardar}" method="post">
+        <label for="nombreCat">Nombre de la Categoría:</label>
+        <input type="text" id="nombreCat" name="nombreCat" required>
+        <button type="submit">Guardar</button>
     </form>
-
 </body>
 </html>

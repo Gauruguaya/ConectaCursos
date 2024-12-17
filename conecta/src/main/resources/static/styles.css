@@ -2,6 +2,11 @@ body {
     font-family: Arial, sans-serif;
 }
 
+nav {
+    background-color: #f8f9fa; /* Fondo claro */
+    padding: 10px;
+}
+
 nav ul {
     list-style-type: none;
     padding: 0;
@@ -12,16 +17,83 @@ nav ul li {
     margin-right: 10px;
 }
 
+nav ul li a {
+    text-decoration: none;
+    color: #007bff; /* Color de enlace */
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #0056b3; /* Color de enlace al pasar el ratón */
+}
+
+h1 {
+    color: #333; /* Color del texto */
+    font-size: 2em; /* Tamaño de fuente */
+    margin-bottom: 20px; /* Espacio inferior */
+    text-align: center; /* Alineación centrada */
+    text-transform: uppercase; /* Transformar texto a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 20px; /* Espacio inferior */
 }
 
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid #ddd; /* Color de borde */
 }
 
 th, td {
-    padding: 10px;
+    padding: 12px; /* Espaciado interno */
     text-align: left;
+}
+
+th {
+    background-color: #f2f2f2; /* Fondo claro para encabezados */
+    color: #333; /* Color del texto de los encabezados */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fondo alternado para filas */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Fondo al pasar el ratón */
+}
+
+img {
+    max-width: 100px; /* Tamaño máximo de las imágenes */
+    height: auto;
+}
+
+form {
+    margin-bottom: 20px; /* Espacio inferior */
+    display: flex;
+    justify-content: center; /* Centrar el formulario horizontalmente */
+    align-items: center; /* Centrar el formulario verticalmente */
+}
+
+form input[type="text"] {
+    width: 200px; /* Ancho de la casilla de texto */
+    padding: 10px; /* Espaciado interno */
+    margin-right: 10px; /* Espacio a la derecha */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Bordes redondeados */
+    box-sizing: border-box;
+}
+
+form button[type="submit"] {
+    background-color: #007bff; /* Fondo del botón */
+    color: white; /* Color del texto del botón */
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de mano */
+}
+
+form button[type="submit"]:hover {
+    background-color: #0056b3; /* Fondo del botón al pasar el ratón */
 }

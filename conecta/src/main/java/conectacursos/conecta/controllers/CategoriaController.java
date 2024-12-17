@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import conectacursos.conecta.dtos.CategoriaDto;
 import conectacursos.conecta.models.CategoriaModel;
+import conectacursos.conecta.models.CursoModel;
 import conectacursos.conecta.repositories.CategoriaRepository;
+import conectacursos.conecta.repositories.CursoRepository;
 import jakarta.validation.Valid;
 
 @Controller
@@ -26,80 +27,87 @@ import jakarta.validation.Valid;
 public class CategoriaController {
     @Autowired
     CategoriaRepository repository;
-    
-    @GetMapping("/")
-    public String index() {
-        return "categoria/index";
-    }
-    
-    @GetMapping("/inserir")
+
+    @Autowired
+    CursoRepository cursoRepository;
+
+    @GetMapping("/inserirCat")
     public String inserirCategoria(Model model) {
-    model.addAttribute("categoriaDto", new CategoriaDto("default value"));
-    return "categoria/inserirCat";
+        List<CategoriaModel> categorias = repository.findAll();
+        model.addAttribute("categorias", categorias);
+        model.addAttribute("categoriaDto", new CategoriaDto("defaultName"));
+        return "categoria/inserirCat";
     }
 
-    @PostMapping("/inserir")
-    public String inserirBD(
-            @ModelAttribute @Valid CategoriaDto categoriaDto, 
-            BindingResult result, RedirectAttributes msg) {
-        if(result.hasErrors()) {
+    @PostMapping("/guardar")
+    public String guardarCategoria(@ModelAttribute @Valid CategoriaDto categoriaDto, BindingResult result, RedirectAttributes msg) {
+        if (result.hasErrors()) {
             msg.addFlashAttribute("erroCadastrar", "Error al registrar nueva categoría");
-            return "redirect:/categoria/inserir";}
-        var categoriaModel = new CategoriaModel();
+            return "redirect:/categoria/inserirCat";
+        }
+        CategoriaModel categoriaModel = new CategoriaModel();
         BeanUtils.copyProperties(categoriaDto, categoriaModel);
         repository.save(categoriaModel);
         msg.addFlashAttribute("sucessoCadastrar", "Categoría registrada!");
-        return "redirect:/categoria/listar";
-    }		
-    @PostMapping("/listar")
-    public ModelAndView listarCategorias(){
-        ModelAndView mv = new ModelAndView("categoria/listarCat");
-        List<CategoriaModel> lista = repository.findAll();
-        mv.addObject("categorias", lista);
-        return mv;
+        return "redirect:/categoria/listarCat";
     }
-    @GetMapping("/listar")
-    public ModelAndView listar() {
-        ModelAndView mv = new ModelAndView("categoria/listarCat");
-        List<CategoriaModel> lista = repository.findAll();
-        mv.addObject("categorias", lista);
-        return mv;
-    }
-    @GetMapping("/editar/{id}")
-    public ModelAndView editar(@PathVariable int id){
-        ModelAndView mv = new ModelAndView("categoria/editarCat");
-        Optional<CategoriaModel> categoria = repository.findById(id);
-        mv.addObject("id", categoria.get().getIdCategoria());
-        mv.addObject("descricao", categoria.get().getNombreCat());
-        return mv;
-    }	
-    
-    @PostMapping("/editar/{id}")
-    public String editarBD(
-            @ModelAttribute @Valid CategoriaDto categoriaDto, 
-            BindingResult result, RedirectAttributes msg,
-            @PathVariable int id) {
-        
-        Optional<CategoriaModel> categoria = repository.findById(id);
 
-        if(result.hasErrors()) {
-            msg.addFlashAttribute("erroEditar", "Error al editar categoría");
-            return "redirect:/categoria/listar";
-        }
-        var categoriaModel = categoria.get();
-        BeanUtils.copyProperties(categoriaDto, categoriaModel);
-        repository.save(categoriaModel);
-        msg.addFlashAttribute("sucessoEditar", "¡Categoria editada!");
-        return "redirect:/categoria/listar";
-    }	
-    @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable int id){
-        Optional<CategoriaModel> categoria = repository.findById(id);
-        if(categoria.isEmpty()) {
-            return "redirect:/categoria/listar";
-        }
-        repository.deleteById(id);
-        return "redirect:/categoria/listar";
+    @GetMapping("/listarCat")
+    public String listarCategorias(Model model) {
+        List<CategoriaModel> categorias = repository.findAll();
+        model.addAttribute("categorias", categorias);
+        return "categoria/listarCat";
     }
-        
+
+    @GetMapping("/detalles/{id}")
+    public String getCursosPorCategoria(@PathVariable("id") int id, Model model) {
+        List<CursoModel> cursos = cursoRepository.findByIdCategoria(id);
+        CategoriaModel categoria = repository.findById(id).orElse(null);
+        if (categoria != null) {
+            model.addAttribute("cursos", cursos);
+            model.addAttribute("nombreCat", categoria.getNombreCat());
+        } else {
+            model.addAttribute("nombreCat", "Categoría no encontrada");
+        }
+        return "categoria/categoria";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editarCategoria(@PathVariable int id, Model model) {
+        Optional<CategoriaModel> categoria = repository.findById(id);
+        if (categoria.isPresent()) {
+            model.addAttribute("id", categoria.get().getIdCategoria());
+            model.addAttribute("descricao", categoria.get().getNombreCat());
+            return "categoria/editarCat";
+        }
+        return "redirect:/categoria/listarCat";
+    }
+
+    @PostMapping("/editar/{id}")
+    public String editarCategoria(@PathVariable int id, @ModelAttribute @Valid CategoriaDto categoriaDto, BindingResult result, RedirectAttributes msg) {
+        if (result.hasErrors()) {
+            msg.addFlashAttribute("erroEditar", "Error al editar categoría");
+            return "redirect:/categoria/editar/" + id;
+        }
+        Optional<CategoriaModel> categoriaOpt = repository.findById(id);
+        if (categoriaOpt.isPresent()) {
+            CategoriaModel categoriaModel = categoriaOpt.get();
+            BeanUtils.copyProperties(categoriaDto, categoriaModel);
+            repository.save(categoriaModel);
+            msg.addFlashAttribute("sucessoEditar", "Categoría editada!");
+        }
+        return "redirect:/categoria/listarCat";
+    }
+
+    @GetMapping("/excluir/{id}")
+    public String excluirCategoria(@PathVariable int id, RedirectAttributes msg) {
+        Optional<CategoriaModel> categoria = repository.findById(id);
+        if (categoria.isPresent()) {
+            repository.deleteById(id);
+            msg.addFlashAttribute("sucessoExcluir", "Categoría eliminada!");
+        } else {
+            msg.addFlashAttribute("erroExcluir", "Error al eliminar categoría");
+        }
+        return "redirect:/categoria/listarCat";
+    }
 }

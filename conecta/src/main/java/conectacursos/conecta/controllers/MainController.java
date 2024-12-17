@@ -48,8 +48,7 @@ public class MainController {
 
     @GetMapping("/categoria/{id}")
     public String cursosPorCategoria(@PathVariable("id") Integer id, Model model) {
-        List<CursoModel> cursos = cursoRepository.findByIdCategoria(id);
-        model.addAttribute("cursos", cursos);
+        // Lógica para obtener cursos por categoría
         return "categoria/categoria";
     }
 

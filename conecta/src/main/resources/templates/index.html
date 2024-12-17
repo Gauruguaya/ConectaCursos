@@ -7,12 +7,15 @@
 <body>
     <nav>
         <ul>
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/categoria/listarCat}">Listar Categorías</a></li>
+            <li><a th:href="@{/curso/listar}">Listar Cursos</a></li>
             <li th:each="categoria : ${categorias}">
-                <a th:href="@{/categoria/{id}(id=${categoria.idCategoria})}" th:text="${categoria.nombreCat}"></a>
+                <a th:href="@{/categoria/detalles/{id}(id=${categoria.idCategoria})}" th:text="${categoria.nombreCat}"></a>
             </li>
         </ul>
     </nav>
-    <h1>Bienvenido al Sistema de Gestión</h1>
+    <h1>Bienvenido a Conecta cursos</h1>
     <form th:action="@{/buscar}" method="get">
         <input type="text" name="query" placeholder="Buscar curso...">
         <button type="submit">Buscar</button>

@@ -5,7 +5,7 @@
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
-    <h1>Cursos en Categoría</h1>
+    <h1 th:text="'Cursos en Categoría ' + ${nombreCat}">Cursos en Categoría</h1>
     <ul>
         <li th:each="curso : ${cursos}">
             <a th:href="@{/curso/{id}(id=${curso.idCurso})}">
